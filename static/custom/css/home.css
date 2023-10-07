@@ -1,0 +1,22 @@
+#article-content .content-section {
+    background-color: rgb(235, 242, 242);
+    width: 100%;
+    padding: 10px 20px;
+    border: 1px solid rgb(217, 213, 213);
+    box-shadow: 5px 3px 10px rgb(185, 181, 181);
+    margin-bottom: 20px;
+}
+
+#article-content:first-child {
+    margin-top: 20px;
+}
+
+#article-content .content-section .img-resize {
+    width: 10%;
+    height: 125px;
+}
+
+#article-content .content-section .author-name {
+    margin-top: 20px;
+    font-size: 25px;
+}
