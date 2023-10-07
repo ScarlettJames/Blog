@@ -10,10 +10,13 @@
     <title>Django Blog</title>
     {% endif %}
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'custom/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
     {% block style %}{% endblock %}
 </head>
 <body>
     {% block content %}{% endblock %}
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'fontawesome/js/all.min.js' %}"></script>
 </body>
 </html>

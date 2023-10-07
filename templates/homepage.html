@@ -34,7 +34,11 @@
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
-        <a href="{% url 'account.logout' %}" class="btn btn-outline-info">Logout</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'account.logout' %}" class="btn btn-outline-info">Logout</a>
+        {% else %}
+          <a href="{% url 'account.login' %}" class="btn btn-outline-info">Login</a>
+        {% endif %}
       </div>
     </div>
   </nav>
@@ -48,12 +52,16 @@
   {% endif %}
 
   <main>
-    <article>
+    <article id="article-content">
       {% for item in items %}
-        <div>
-          <div>{{ item.author }}</div>
-          <h3>{{ item.title }}</h3>
-          <p>{{ item.body }}</p>
+        <div class="container content-section">
+          <div class="d-flex">
+            <img src="{{ item.author.profile.image.url }}" class="img-thumbnail me-4 rounded-circle img-resize" alt="...">
+            <div class="author-name">{{ item.author }}</div>
+            <i class="fa-solid fa-pen"></i>
+          </div>
+          <h3 class="title">{{ item.title }}</h3>
+          <p class="content">{{ item.body }}</p>
         </div>
       {% endfor %}
     </article>
