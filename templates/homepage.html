@@ -55,10 +55,12 @@
     <article id="article-content">
       {% for item in items %}
         <div class="container content-section">
-          <div class="d-flex">
+          <div class="display-grid">
             <img src="{{ item.author.profile.image.url }}" class="img-thumbnail me-4 rounded-circle img-resize" alt="...">
             <div class="author-name">{{ item.author }}</div>
-            <i class="fa-solid fa-pen"></i>
+            <a href="{% url 'blog.update' item.id %}" class="display-grid">
+              <i class="fa-solid fa-pen edit-icon"></i>
+            </a>
           </div>
           <h3 class="title">{{ item.title }}</h3>
           <p class="content">{{ item.body }}</p>
