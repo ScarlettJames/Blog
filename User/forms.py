@@ -1,4 +1,5 @@
 from django import forms
+from .models import Profile
 
 class Styling:
 
@@ -53,6 +54,9 @@ class LoginForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(attrs=Styling.email),required=True)
     password = forms.CharField(widget=forms.PasswordInput(attrs=Styling.passwordOne),required=True)
 
-class ProfileForm(forms.Form):
+class ProfileForm(forms.ModelForm):
+    image = forms.ImageField()
 
-    img = forms.ImageField()
+    class Meta:
+        model = Profile
+        fields = ['image']

@@ -6,14 +6,12 @@ from .models import Blog
 from .forms import BlogCreateForm
 
 
-class HomeView(ListView, LoginRequiredMixin):
-    login_url = '/account/login/'
+class HomeView(ListView):
     template_name = 'homepage.html'
     model = Blog
     context_object_name = 'items'
 
-class BlogCreateView(View, LoginRequiredMixin):
-    login_url = '/account/login/'
+class BlogCreateView(View):
 
     def get(self,request, *args, **kwargs):
         form = BlogCreateForm()
@@ -28,8 +26,7 @@ class BlogCreateView(View, LoginRequiredMixin):
             return redirect('blog.home')
         return render(request, 'createBlog.html', {'form': form})
     
-class BlogDetailView(ModelFormMixin, DetailView, LoginRequiredMixin):
-    login_url = '/account/login/'
+class BlogDetailView(ModelFormMixin, DetailView):
     template_name = 'updateBlog.html'
     success_url = '/blog/home'
     model = Blog

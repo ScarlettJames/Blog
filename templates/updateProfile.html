@@ -1,0 +1,20 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="justify-content-center">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card" style="width: 18rem;">
+                <img src="{{ profile.image.url }}" class="card-img-top" alt="...">
+                <input type="file" name="image" accept=".png">
+                <div class="card-body">
+                  <input type="text" name="username" value="{{ user.username }}">
+                  <input type="email" name="email" value="{{user.email }}">
+                  <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+              </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
