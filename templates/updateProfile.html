@@ -7,7 +7,7 @@
             {% csrf_token %}
             <div class="card" style="width: 18rem;">
                 <img src="{{ profile.image.url }}" class="card-img-top" alt="...">
-                <input type="file" name="image" accept=".png">
+                <input type="file" name="image" accept="image/*">
                 <div class="card-body">
                   <input type="text" name="username" value="{{ user.username }}">
                   <input type="email" name="email" value="{{user.email }}">

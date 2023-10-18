@@ -61,7 +61,8 @@ class ProfileView(UpdateView, LoginRequiredMixin):
     def post(self, request, *args, **kwargs):
         username = request.POST.get('username')
         email = request.POST.get('email')
-        User.objects.update(username=username, email=email)
+        if request.user.username != username or request.user.email != email:
+            User.objects.filter(pk=request.user.id).update(username=username, email=email)
         return super().post(request, *args, **kwargs)
 
 class LogoutView(View):
