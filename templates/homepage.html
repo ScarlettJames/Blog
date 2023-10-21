@@ -1,48 +1,6 @@
 {% extends 'master.html' %}
 
 {% block content %}
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'account.profile' user.profile.id %}">Profile</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'blog.new' %}">Create Blog</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-        {% if user.is_authenticated %}
-          <a href="{% url 'account.logout' %}" class="btn btn-outline-info">Logout</a>
-        {% else %}
-          <a href="{% url 'account.login' %}" class="btn btn-outline-info">Login</a>
-        {% endif %}
-      </div>
-    </div>
-  </nav>
-
   {% if messages %}
     {% for message in messages %}
     <div class="alert alert-success" role="alert">
@@ -59,13 +17,42 @@
             <img src="{{ item.author.profile.image.url }}" class="img-thumbnail me-4 rounded-circle img-resize" alt="...">
             <div class="author-name">{{ item.author }}</div>
             {% if user.id == item.author.id %}
-              <a href="{% url 'blog.update' item.id %}" class="display-grid">
-                <i class="fa-solid fa-pen edit-icon"></i>
-              </a>
+              <div class="inner-display-grid">
+                <a href="{% url 'blog.update' item.id %}" class="edit-icon">
+                  <i class="fa-solid fa-pen"></i>
+                </a>
+                <button class="deleteButton" style="margin-top: 20px; grid-column: 2; border: none; padding: 0; background: none; height: 20%; color: red;"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+                <form action="{% url 'blog.delete' item.id %}" method="post">
+                  {% csrf_token %}
+                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ item.title }}</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          {{item.body}}
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>                
+                </form>
+              </div>
             {% endif %}
           </div>
           <h3 class="title">{{ item.title }}</h3>
           <p class="content">{{ item.body }}</p>
+          <div class="d-flex justify-content-end">
+            <a href="{% url 'blog.detail' item.id %}" class="btn btn-outline-primary p-1">Cilck For Detail</a>
+          </div>
         </div>
       {% endfor %}
     </article>

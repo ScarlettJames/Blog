@@ -1,7 +1,6 @@
-from django.shortcuts import render, redirect, resolve_url
-from django.views.generic import ListView, View, DetailView
-from django.views.generic.edit import ModelFormMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import ListView, View, DetailView, UpdateView, DeleteView
 from .models import Blog
 from .forms import BlogCreateForm
 
@@ -26,7 +25,7 @@ class BlogCreateView(View):
             return redirect('blog.home')
         return render(request, 'createBlog.html', {'form': form})
     
-class BlogDetailView(ModelFormMixin, DetailView):
+class BlogUpdateView(UpdateView):
     template_name = 'updateBlog.html'
     success_url = '/blog/home'
     model = Blog
@@ -38,13 +37,12 @@ class BlogDetailView(ModelFormMixin, DetailView):
         context['form'] = BlogCreateForm(instance=init_obj)
         return context
     
-    def post(self, request, *args, **kwargs):
-        blog_obj = self.get_object()
-        form = BlogCreateForm(request.POST)
-        if form.is_valid():
-            title = form.cleaned_data['title']
-            body = form.cleaned_data['body']
-            blog_obj.title, blog_obj.body = title, body
-            blog_obj.save()
-            return redirect('blog.home')
-        return redirect('blog.update')
+class BlogDetailView(DetailView):
+    template_name = "detailBlog.html"
+    model = Blog
+    context_object_name = 'item'
+
+class BlogDeleteView(DeleteView):
+    model = Blog
+    context_object_name = "item"
+    success_url = reverse_lazy('blog.home')
