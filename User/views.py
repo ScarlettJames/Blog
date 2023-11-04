@@ -54,7 +54,7 @@ class ProfileView(UpdateView, LoginRequiredMixin):
     success_url = '/blog/home'
 
     def get(self, request, *args, **kwargs):
-        profile = self.model.objects.get(user_id = kwargs["pk"])
+        profile = self.model.objects.get(pk = kwargs["pk"])
         context = {'profile' : profile}
         return render(request, self.template_name, context)
     
