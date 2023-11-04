@@ -27,7 +27,12 @@
     grid-template-columns: 12% 77% 10%;
 }
 
+.inner-display-grid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
 #article-content .content-section .edit-icon {
     margin-top: 20px;
-    grid-column: 3;
+    grid-column: 1;
 }

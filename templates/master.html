@@ -15,6 +15,7 @@
     {% block style %}{% endblock %}
 </head>
 <body>
+    {% include 'navbar.html' %}
     {% block content %}{% endblock %}
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'fontawesome/js/all.min.js' %}"></script>
