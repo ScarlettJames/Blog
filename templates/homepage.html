@@ -22,12 +22,12 @@
                   <i class="fa-solid fa-pen"></i>
                 </a>
                 <button class="deleteButton" style="margin-top: 20px; grid-column: 2; border: none; padding: 0; background: none; height: 20%; color: red;"
-                  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  data-bs-toggle="modal" data-bs-target="#exampleModal{{item.id}}">
                   <i class="fa-solid fa-trash"></i>
                 </button>
                 <form action="{% url 'blog.delete' item.id %}" method="post">
                   {% csrf_token %}
-                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="exampleModal{{item.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
