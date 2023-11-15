@@ -11,6 +11,8 @@ class HomeView(ListView):
     template_name = 'homepage.html'
     model = Blog
     context_object_name = 'items'
+    paginate_by = 2
+    ordering = ["-post_created"]
 
 class BlogCreateView(View):
 
