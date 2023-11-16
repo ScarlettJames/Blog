@@ -1,6 +1,6 @@
 {% extends 'master.html' %}
 
-{% block content%}
+{% block content %}
 <main>
     <article id="article-content">
         <div class="container content-section">
@@ -17,5 +17,18 @@
           <p class="content">{{ item.body }}</p>
         </div>
     </article>
+    <div>
+      <form id="commentForm" method="post">
+        {% csrf_token %}
+        <label for="comment">Comment</label>
+        <textarea name="comment" id="id_comment" cols="30" rows="10"></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
 </main>
+{% endblock %}
+{% block script %}
+  <script>
+    const form = document.getElementById('commentForm');
+  </script>
 {% endblock %}

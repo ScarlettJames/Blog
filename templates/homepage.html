@@ -51,6 +51,9 @@
           </div>
           <h3 class="title">{{ item.title }}</h3>
           <p class="content">{{ item.body }}</p>
+          <div class="d-flex justify-content-end">
+            <a href="{% url 'blog.detail' item.id %}" class="btn btn-outline-primary p-1">Click To View Details</a>
+          </div>
         </div>
       {% endfor %}
     </article>

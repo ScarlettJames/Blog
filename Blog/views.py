@@ -1,5 +1,3 @@
-from typing import Any
-from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, View, DetailView, UpdateView, DeleteView

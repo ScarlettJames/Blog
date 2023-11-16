@@ -24,7 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('User.urls')),
     path('blog/', include('Blog.urls')),
-    path('', HomeView.as_view(), name='home')
+    path('', HomeView.as_view(), name='home'),
+    path('blog/comment/', include('Comment.urls')),
 ]
 
 if settings.DEBUG:
