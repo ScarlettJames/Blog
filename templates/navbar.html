@@ -9,7 +9,7 @@
           <li class="nav-item">
             <a class="nav-link active" style="color: #eea439;" aria-current="page" href="{% url 'blog.home' %}">Home</a>
           </li>
-          {% if user.is_authenticated %}
+          {% if user.is_authenticated %} 
           <li class="nav-item">
             <a class="nav-link" style="color: #eea439;" href="{% url 'account.profile' user.profile.id %}">Profile</a>
           </li>

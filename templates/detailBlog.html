@@ -27,8 +27,47 @@
     </div>
 </main>
 {% endblock %}
+
 {% block script %}
-  <script>
+  {% if user.is_authenticated %}
+  <script type="text/javascript">
+
     const form = document.getElementById('commentForm');
+    const comment = document.getElementById('id_comment');
+
+    const user_id = parseInt("{{user.id}}");
+    const post_id = parseInt("{{item.id}}");
+
+    function handleSubmit(event) {
+      //prevent from submit form
+      event.preventDefault();
+      event.stopPropagation();
+
+      const url = "{% url 'comment.new' %}"
+
+      const formData = new FormData();
+      formData.append('comment', comment.value);
+      formData.append('author', user_id);
+      formData.append('post', post_id);
+
+      // Send form Data
+      sendData(url, formData);
+    }
+
+    function sendData(url, formData) {
+      fetch(url, {
+        method: 'POST',
+        mode: "same-origin",
+        credentials: "same-origin",
+        headers: {
+          'Content-Type': "application/json",
+        },
+        body: formData,
+      })
+      .then( data => console.log(data))
+      .catch(err => console.error(err))
+    }
+
   </script>
+  {% endif %}
 {% endblock %}
