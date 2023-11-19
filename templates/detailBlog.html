@@ -34,6 +34,7 @@
 
     const form = document.getElementById('commentForm');
     const comment = document.getElementById('id_comment');
+    const csrf = document.getElementById('csrfmiddlewaretoken');
 
     const user_id = parseInt("{{user.id}}");
     const post_id = parseInt("{{item.id}}");
@@ -46,6 +47,7 @@
       const url = "{% url 'comment.new' %}"
 
       const formData = new FormData();
+      formData.append('csrfmiddlewaretoken', csrf[0].value);
       formData.append('comment', comment.value);
       formData.append('author', user_id);
       formData.append('post', post_id);
