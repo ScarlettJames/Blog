@@ -16,6 +16,11 @@
           <h3 class="title">{{ item.title }}</h3>
           <p class="content">{{ item.body }}</p>
         </div>
+        <div>
+          {% for comment in comments %}
+            <div>{{comment}}</div>
+          {% endfor %}
+        </div>
     </article>
     <div>
       <form id="commentForm" method="post">
@@ -38,37 +43,35 @@
 
     const user_id = parseInt("{{user.id}}");
     const post_id = parseInt("{{item.id}}");
+    const URL = "{% url 'comment.new' %}";
 
     function handleSubmit(event) {
       //prevent from submit form
       event.preventDefault();
       event.stopPropagation();
 
-      const url = "{% url 'comment.new' %}"
-
-      const formData = new FormData();
-      formData.append('csrfmiddlewaretoken', csrf[0].value);
-      formData.append('comment', comment.value);
-      formData.append('author', user_id);
-      formData.append('post', post_id);
+      const data = {};
+      data['csrfmiddlewaretoken'] = csrf[0].value;
+      data['comment'] = comment.value;
+      data['author'] = user_id;
+      data['post'] = post_id;
 
       // Send form Data
-      sendData(url, formData);
+      sendData(url, data);
     }
 
-    function sendData(url, formData) {
-      fetch(url, {
-        method: 'POST',
-        mode: "same-origin",
-        credentials: "same-origin",
-        headers: {
-          'Content-Type': "application/json",
-        },
-        body: formData,
+    function sendData(url, data) {
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: data,
+        success: function (res) {
+          console.log(res);
+        }
       })
-      .then( data => console.log(data))
-      .catch(err => console.error(err))
     }
+
+    form.addEventListener('submit', handleSubmit);
 
   </script>
   {% endif %}
