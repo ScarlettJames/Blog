@@ -17,3 +17,8 @@ class NewComment(CreateView):
         post = Blog.objects.get(pk = int(data['post'][0]))
         modelCreated = self.model.objects.create(author = user, post = post, comment = comment)
         return JsonResponse({'success': True})
+    
+class CommentList(ListView):
+    template_name = 'commentlist.html'
+    model = CommentModel
+    context_object_name = 'comments'

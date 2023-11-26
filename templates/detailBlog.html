@@ -1,4 +1,5 @@
 {% extends 'master.html' %}
+{% load static %}
 
 {% block content %}
 <main>
@@ -22,57 +23,21 @@
           {% endfor %}
         </div>
     </article>
+    <div id="comment-section">
+      <iframe src="/blog/comment/commentlist" frameborder="0"></iframe>
+    </div>
     <div>
-      <form id="commentForm" method="post">
+      <form id="commentForm">
         {% csrf_token %}
         <label for="comment">Comment</label>
         <textarea name="comment" id="id_comment" cols="30" rows="10"></textarea>
-        <button type="submit">Submit</button>
+        <button type="button" onclick="handleSubmit('{{user.id}}','{{item.id}}',`{% url 'comment.new' %}`)">Submit</button>
       </form>
     </div>
+    
 </main>
 {% endblock %}
 
 {% block script %}
-  {% if user.is_authenticated %}
-  <script type="text/javascript">
-
-    const form = document.getElementById('commentForm');
-    const comment = document.getElementById('id_comment');
-    const csrf = document.getElementById('csrfmiddlewaretoken');
-
-    const user_id = parseInt("{{user.id}}");
-    const post_id = parseInt("{{item.id}}");
-    const URL = "{% url 'comment.new' %}";
-
-    function handleSubmit(event) {
-      //prevent from submit form
-      event.preventDefault();
-      event.stopPropagation();
-
-      const data = {};
-      data['csrfmiddlewaretoken'] = csrf[0].value;
-      data['comment'] = comment.value;
-      data['author'] = user_id;
-      data['post'] = post_id;
-
-      // Send form Data
-      sendData(url, data);
-    }
-
-    function sendData(url, data) {
-      $.ajax({
-        type: 'POST',
-        url: url,
-        data: data,
-        success: function (res) {
-          console.log(res);
-        }
-      })
-    }
-
-    form.addEventListener('submit', handleSubmit);
-
-  </script>
-  {% endif %}
+  <script src="{% static '/js/comment.js' %}" type="text/javascript"></script>
 {% endblock %}
