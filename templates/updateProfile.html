@@ -1,20 +1,38 @@
 {% extends 'master.html' %}
-
+{% load static %}
 {% block content %}
 <div class="container">
     <div class="justify-content-center">
+      {% if user.profile.id == profile.id %}
         <form action="" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="card" style="width: 18rem;">
-                <img src="{{ profile.image.url }}" class="card-img-top" alt="...">
-                <input type="file" name="image" accept="image/*">
-                <div class="card-body">
-                  <input type="text" name="username" value="{{ user.username }}">
-                  <input type="email" name="email" value="{{user.email }}">
-                  <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-              </div>
+        {% csrf_token %}
+          <div class="card" style="width: 18rem;">
+            <img src="{{ profile.image.url }}" class="card-img-top" alt="...">
+            <input type="file" name="image" accept="image/*">
+            <div class="card-body">
+              <input type="text" name="username" value="{{ user.username }}">
+              <input type="email" name="email" value="{{user.email }}">
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+          </div>
         </form>
+        {% else %}
+        <div class="card" style="width: 18rem;">
+          <img src="{{ profile.image.url }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <input type="text" name="username" value="{{ profile.user.username }}" disabled>
+            <input type="email" name="email" value="{{ profile.user.email }}" disabled>
+          </div>
+          <form>
+            {% csrf_token %}
+            <button onclick="handleSubmit('{{profile.user.id}}','{{user.id}}',`{% url 'user.addfollower' %}`)">Follow</button>
+          </form>
+          <!-- <a href="{% url 'user.addfollower' %}">Follow</a> -->
+        </div>
+      {% endif %}
     </div>
 </div>
+{% endblock %}
+{% block script %}
+  <script src="{% static '/js/followSystem.js' %}" type="text/javascript"></script>
 {% endblock %}

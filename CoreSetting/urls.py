@@ -26,6 +26,7 @@ urlpatterns = [
     path('blog/', include('Blog.urls')),
     path('', HomeView.as_view(), name='home'),
     path('blog/comment/', include('Comment.urls')),
+    path('user/', include('Follow.urls')),
 ]
 
 if settings.DEBUG:
